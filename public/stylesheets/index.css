@@ -1,0 +1,13 @@
+ul {
+	margin: 15px;
+	padding-left: 40px;
+	font-size: 16px;
+}
+ul li {
+	cursor: pointer;
+	padding: 5px 0;
+}
+ul li a:hover {
+	color: #3486A7;
+	text-decoration: underline;
+}
