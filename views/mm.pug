@@ -2,15 +2,20 @@ extends layout
 
 block content
   h1
-    a(href='./') Seattle express-react-view
+    a(href='../') Seattle
   h2 最大正向匹配（MaximumMatching）
   .wrap
+    .flash#hint
+      .flash-inner
+        span.icon-close#icon-close ×
+        p#text-error 请输入测试文本和最大单词长度
     form
       label(for='input') 请输入测试文本
-        span.text-error.pull-right 测试文本不可为空
       textarea#input
       .form-group
-        a(href='javascript:void(0)').btn.btn-info 最大正向匹配
+        label(for='maxLength').inline 最大单词长度：
+        input(type='number' name='maxLength' value='2')
+        a(href='javascript:void(0)').btn.btn-info.pull-right#btn-mm 最大正向匹配
       textarea#output(readonly='readonly')
   script(src='/javascripts/jquery-3.2.0.min.js')
   script(src='/javascripts/mm.js')

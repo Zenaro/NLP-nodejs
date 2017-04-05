@@ -1,13 +1,32 @@
 $(document).ready(function() {
 	var urlPrefix = '../model/';
-	$.ajax({
-		'url': urlPrefix + 'getMM',
-		'type': 'get',
-		'data': {
-			'string': '我在餐厅吃饭'
+	var App = {
+		hintClose: function() {
+			$('#hint').hide();
 		},
-		'success': function(res) {
-			console.log(res);
+		getMM: function() {
+			var text = $.trim($('#input').val()),
+				length = parseInt($('input[name=maxLength]').val());
+			if (text == '' || length <= 0) {
+				$('#hint').show();
+				return;
+			}
+			$.ajax({
+				'url': urlPrefix + 'getMM',
+				'type': 'get',
+				'data': {
+					'string': text,
+					'length': length
+				},
+				'dataType': 'json',
+				'success': function(res) {
+					if (res.status == 1) {
+						$('#output').text(res.result);
+					}
+				}
+			});
 		}
-	});
+	};
+	$('#btn-mm').on('click', App.getMM);
+	$('#icon-close').on('click', App.hintClose);
 });

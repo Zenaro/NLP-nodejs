@@ -1,13 +1,13 @@
 const readline = require('readline');
 const fs = require('fs');
 const rl = readline.createInterface({
-	input: fs.createReadStream('./model/doc/test.txt')
+	input: fs.createReadStream('./model/doc/chineseDic.txt')
 });
-var json = [];
+var json = {};
 
-rl.on('line', (line) => {
-	console.log(`文件的单行内容：${line}`);
-	json.push(line);
+var online = rl.on('line', (line) => {
+	var reg = line.split(',');
+	json[reg[0]] = reg[1];
 });
 
 module.exports = json;
