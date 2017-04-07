@@ -11,7 +11,14 @@ router.get('/mm', function(req, res, next) {
 router.get('/claws', function(req, res, next) {
 	res.render('claws', {
 		title: 'Seattle',
-		cssSource: 'claws'
+		cssSource: 'base'
+	});
+});
+
+router.get('/hmm', function(req, res, next) {
+	res.render('hmm', {
+		title: 'Seattle',
+		cssSource: 'base'
 	});
 });
 

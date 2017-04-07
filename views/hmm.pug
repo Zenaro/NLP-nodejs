@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  h1
+    a(href='../') Seattle
+  h2 隐马尔科夫模型（HMM）
+  .wrap
+    .flash#hint
+      .flash-inner
+        span.icon-close#icon-close ×
+        p#text-error 请输入测试文本和最大单词长度
+    form
+      label(for='input') 测试文本
+      textarea#input(readonly='readonly') the bear is on the move
+      .form-group
+        a(href='javascript:void(0)').btn.btn-info.pull-right#btn-hmm HMM
+      textarea#output(readonly='readonly')
+  script(src='/javascripts/jquery-3.2.0.min.js')
+  script(src='/javascripts/hmm.js')
