@@ -89,5 +89,4 @@ function onListening() {
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
   console.log('server running at localhost:3000');
-  child_process.exec("start http://localhost:3000");
 }
