@@ -22,7 +22,7 @@ module.exports = {
 				currentLength -= 1; // 减少剪切的长度
 
 			} else {
-				result.push("不存在'" + tmp + "'这个词");
+				result.push("词典中未收录'" + tmp + "'这个词");
 				index += currentLength;
 				currentLength = maxLength;
 			}

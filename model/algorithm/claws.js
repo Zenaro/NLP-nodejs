@@ -1,4 +1,4 @@
-var fileReader = require('../fileReader/clawsReader');
+var fileReader = require('../fileReader/wordPropReader');
 var CLAWS = {
 	allPath: [],
 	graph: [],

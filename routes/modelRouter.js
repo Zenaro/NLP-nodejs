@@ -32,7 +32,17 @@ router.get('/getCLAWS', function(req, res, next) {
 });
 
 router.get('/getHMM', function(req, res, next) {
-	res.end(JSON.stringify(HMM.countPer()));
+	var mmList = MM.forwardMaximumMatching(req.query.string, req.query.length);
+	var propsList = HMM.getOptimalPath(mmList);
+	var string = "";
+	for (var i = 0, length = mmList.length; i < length; i++) {
+		string += mmList[i] + "/" + (propsList[i] || "") + "  ";
+	}
+	var response = {
+		'status': 1,
+		'result': string
+	}
+	res.end(JSON.stringify(response));
 });
 
 module.exports = router;
