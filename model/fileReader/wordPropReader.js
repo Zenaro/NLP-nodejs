@@ -1,5 +1,6 @@
 const readline = require('readline');
 const fs = require('fs');
+var EventProxy = require('eventproxy');
 
 // 文件流
 const propStream = readline.createInterface({
@@ -14,14 +15,19 @@ const propPropStream = readline.createInterface({
 
 // 读取prop并存入propDic
 var propDic = {};
+
+// 读取word-prop并存入wordDic和wordPropDic
+var wordDic = {},
+	wordPropDic = {};
+
+// 读取prop-prop并存入propPropDic
+var propPropDic = {};
+
 var pStream = propStream.on('line', (line) => {
 	var reg = line.split(',');
 	propDic[reg[0]] = parseInt(reg[1]);
 });
 
-// 读取word-prop并存入wordDic和wordPropDic
-var wordDic = {},
-	wordPropDic = {};
 var wpStream = wordPropStream.on('line', (line) => {
 	var reg = line.split(',');
 	wordPropDic[reg[0] + reg[1]] = parseInt(reg[2]);
@@ -34,8 +40,6 @@ var wpStream = wordPropStream.on('line', (line) => {
 	}
 });
 
-// 读取prop-prop并存入propPropDic
-var propPropDic = {};
 var ppStream = propPropStream.on('line', (line) => {
 	var reg = line.split(',');
 	propPropDic[reg[0] + reg[1]] = parseInt(reg[2]);
