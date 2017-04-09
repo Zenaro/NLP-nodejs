@@ -1,6 +1,5 @@
 const readline = require('readline');
 const fs = require('fs');
-var EventProxy = require('eventproxy');
 
 // 文件流
 const propStream = readline.createInterface({

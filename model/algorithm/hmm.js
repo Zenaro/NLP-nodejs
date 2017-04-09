@@ -28,69 +28,6 @@ var HMM = {
 	 * @ param: mmList--字符串切割后的数组:["我"，"在", "餐厅","吃饭"]
 	 * @ return: 最优路径 this.propsList
 	 */
-	getTestPath: function(mmList) { // succeed
-		this.propsList = [];
-		this.graph = fileReader.getGraph(mmList);
-		// 获取字典 hash
-		var wordPropDic = fileReader.getWordPropDic();
-		var propPropDic = fileReader.getPropPropDic();
-		var propDic = fileReader.getPropDic();
-
-		var prevVector = {}, // 收录前驱指针及其概率的hash表 {'prop': percent} 
-			currentVector = {}; // 收录当前词性及概率的hash表 {'prop': percent}
-
-		// 对 graph 进行遍历
-		for (var i = 0, length = this.graph.length; i < length; i++) {
-			var word = mmList[i]; // 字符依次为 "我" -- "在" -- "餐厅" -- "吃饭"
-			var props = this.graph[i][word]; // 字符的所有词性
-
-			// 遍历词性  [p, v, n]
-			for (var key in props) {
-				if (this.isEmptyObject(prevVector)) { // 首次则处理为<BOS>
-					var countXY = propPropDic["<BOS>" + key] == undefined ?
-						1 : propPropDic["<BOS>" + key]; // 对0 进行平滑处理
-					var countX = propDic["<BOS>"];
-
-					currentVector[key] = countXY / countX * wordPropDic[word + key] / propDic[key];
-
-				} else { // 非首次则需要计算当前词性的最优前驱指针
-					var maxPrevPercent = 0, // 最优前驱的概率
-						curPrevPercent = 0; // 当前前驱的概率
-					for (var k in prevVector) { // 对前驱的所有词性进行遍历
-						var countXY = propPropDic[k + key] == undefined ?
-							1 : propPropDic[k + key]; // 对0进行平滑处理
-						var countX = propDic[k];
-						curPrevPercent = prevVector[k] * countXY / countX * wordPropDic[word + key] / propDic[key];
-
-						if (curPrevPercent > maxPrevPercent) {
-							maxPrevPercent = curPrevPercent;
-							currentVector[key] = maxPrevPercent;
-						}
-					}
-				}
-			}
-
-			// 最优词性的筛选
-			var targetPercent = 0,
-				targetProp = "";
-			for (var key in props) {
-				if (currentVector[key] > targetPercent) {
-					targetPercent = currentVector[key];
-					targetProp = key;
-				}
-			}
-
-			// 将当前词的最优词性记录进this.propsList
-			this.propsList.push(targetProp);
-
-			// 将其他参数初始化
-			prevVector = this.clone(currentVector); // 拷贝
-			currentVector = {};
-			targetPercent = 0;
-			targetProp = "";
-		}
-		return this.propsList;
-	},
 	getOptimalPath: function(mmList) {
 		this.graph = fileReader.getGraph(mmList);
 		// 获取字典 hash
@@ -141,19 +78,6 @@ var HMM = {
 					this.point[i][key] = maxPrevPoint;
 				}
 			}
-
-			// 最优词性的筛选
-			// var targetPercent = 0,
-			// 	targetProp = "";
-			// for (var key in props) {
-			// 	if (currentVector[key] > targetPercent) {
-			// 		targetPercent = currentVector[key];
-			// 		targetProp = key;
-			// 	}
-			// }
-
-			// // 将当前词的最优词性记录进this.propsList
-			// this.propsList.push(targetProp);
 
 			// 将其他参数初始化
 			prevVector = this.clone(currentVector); // 拷贝
