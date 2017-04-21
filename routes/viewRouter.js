@@ -22,4 +22,11 @@ router.get('/hmm', function(req, res, next) {
 	});
 });
 
+router.get('/chunkParsing', function(req, res, next) {
+	res.render('chunkParsing', {
+		title: 'Seattle',
+		cssSource: 'base'
+	});
+});
+
 module.exports = router;
